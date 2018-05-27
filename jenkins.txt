@@ -28,7 +28,7 @@
 1:Diazo/RCSLandAid, RCSLandAid.version, RCSLandAid
 
 # 2:PROJNAME, PROJFILE, VERSIONFILE, PLUGINSFOLDER
-2:RCSLandAid,RCSLandAid/RCSLandAid.csproj,KerbalHotSeat.version,GameData/Diazo/RCSLandAid/Plugins
+2:RCSLandAid,RCSLandAid/RCSLandAid.csproj,RCSLandAid.version,GameData/Diazo/RCSLandAid/Plugins
 
 # 3:SOURCEFILE, DESTDIR
 3:RCSLandAid.version,GameData/Diazo/RCSLandAid
