@@ -54,7 +54,22 @@ namespace RCSLandAid
         float rcsXpower = 0f;
          float rcsYpower = 0f;
          float rcsZpower = 0f;
-        
+#if false
+        internal static void SetColors(LineRenderer l, Color start, Color end)
+        {
+            l.startColor = start;
+            l.endColor = end;
+        }
+        internal static void SetWidth(LineRenderer l, float start, float end)
+        {
+            l.startWidth = start;
+            l.endWidth = end;
+        }
+#endif
+        internal static void SetVertexCount(LineRenderer l, int cnt)
+        {
+            l.positionCount = cnt;
+        }
         public void Start()
         {
 
@@ -63,9 +78,10 @@ namespace RCSLandAid
                 theLine = lineObj.AddComponent<LineRenderer>();
                 theLine.material = new Material(Shader.Find("Particles/Additive"));
                 //theLine.SetColors(Color.red, Color.red);
-                theLine.SetColors(Color.blue, Color.blue);
-                theLine.SetWidth(0, 0);
-                theLine.SetVertexCount(2);
+                RCSLandingAid.SetColors(theLine, Color.blue, Color.blue);
+                RCSLandingAid.SetWidth(theLine, 0, 0);
+                SetVertexCount(theLine, 2);
+  
                 theLine.useWorldSpace = true;
                 this.vessel.OnPostAutopilotUpdate += ControlsOverride;
             }
@@ -124,7 +140,7 @@ namespace RCSLandAid
                 vslRef = this.vessel.ReferenceTransform;
                 worldUp = vslRef.position - this.vessel.mainBody.position;
 
-                moveHoriz = Vector3.Exclude(worldUp, surVect);
+                moveHoriz = Vector3.ProjectOnPlane(worldUp, surVect);
                 moveHorizLocal = vslRef.InverseTransformDirection(moveHoriz);
 
                 if (isMasterModule)
@@ -189,7 +205,7 @@ namespace RCSLandAid
                             ourBtnState = 3;
                         }
 
-                        Vector3 targetVect = Vector3.Exclude(worldUp, targetLocation - vslRef.position); //vector from vessel to target, limit to horizontal plane
+                        Vector3 targetVect = Vector3.ProjectOnPlane(worldUp, targetLocation - vslRef.position); //vector from vessel to target, limit to horizontal plane
                         Vector3 targetVectLocal = (vslRef.InverseTransformDirection(targetVect)); //our vector, as distance to target, in local coords uses
 
                         float targetVel = (Mathf.Sqrt(2f * Mathf.Abs(targetVectLocal.magnitude) * (thisBodyAccel * 3)))*aggresiveness; //calc max speed we could be going for this distance to target. desired vel = sqaure root of (2*distToTarget*desiredAccel)

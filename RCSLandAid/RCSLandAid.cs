@@ -7,28 +7,42 @@ using UnityEngine;
 using System.IO;
 using KSP.UI.Screens;
 
+using ClickThroughFix;
+using ToolbarControl_NS;
+
 namespace RCSLandAid
 {
+    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    public class RegisterToolbar : MonoBehaviour
+    {
+        void Start()
+        {
+            ToolbarControl.RegisterMod(RCSLandingAid.MODID, RCSLandingAid.MODNAME);
+        }
+    }
+
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class RCSLandingAid : MonoBehaviour
     {
 
 
         bool selectingTarget = false;
-        private IButton RCSla1Btn;
+        //private IButton RCSla1Btn;
         private bool buttonCreated = false;
         //LineRenderer theLine = new LineRenderer();
         //public static bool forceSASup = true;
         //RCSLandingAidWindow RCSwin;
         Part lastRoot = new Part();
         //private ConfigNode RCSla;
-        ApplicationLauncherButton LAButton = null; //stock toolbar button instance
-        bool checkBlizzyToolbar = false;
-        Texture2D btnRed = new Texture2D(24, 24);
-        Texture2D btnBlue = new Texture2D(24, 24);
-        Texture2D btnRedEnable = new Texture2D(24, 24);
-        Texture2D btnBlueEnable = new Texture2D(24, 24);
-        Texture2D btnGray = new Texture2D(24, 24);
+        //ApplicationLauncherButton LAButton = null; //stock toolbar button instance
+        ToolbarControl toolbarControl;
+
+        //bool checkBlizzyToolbar = false;
+        //Texture2D btnRed = new Texture2D(24, 24);
+        //Texture2D btnBlue = new Texture2D(24, 24);
+        //Texture2D btnRedEnable = new Texture2D(24, 24);
+        //Texture2D btnBlueEnable = new Texture2D(24, 24);
+        //Texture2D btnGray = new Texture2D(24, 24);
         bool showLAMenu = false;
         Rect LASettingsWin = new Rect(Screen.width - 200, 40, 160, 90);
         public static RCSLandingAidModule curVsl;
@@ -43,11 +57,12 @@ namespace RCSLandAid
             print("Landing Aid Ver. 3.2 start.");
             thisModule = this;
             //RenderingManager.AddToPostDrawQueue(0, LAOnDraw); //GUI window hook
-            byte[] importTxtRed = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/iconRed.png"); //load our button textures
-            byte[] importTxtBlue = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/iconBlue.png");
-            byte[] importTxt = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/iconWhiteB.png");
-            byte[] importTxtRedEnable = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/iconRedEnabled.png"); //load our button textures
-            byte[] importTxtBlueEnable = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/iconBlueEnabled.png"); //load our button textures
+#if false
+            byte[] importTxtRed = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/PluginData/Textures/iconRed.png"); //load our button textures
+            byte[] importTxtBlue = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/PluginData/Textures/iconBlue.png");
+            byte[] importTxt = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/PluginData/Textures/iconWhiteB.png");
+            byte[] importTxtRedEnable = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled.png"); //load our button textures
+            byte[] importTxtBlueEnable = File.ReadAllBytes(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled.png"); //load our button textures
 
 
             btnRed.LoadImage(importTxtRed);
@@ -60,15 +75,17 @@ namespace RCSLandAid
             btnRedEnable.Apply();
             btnBlueEnable.LoadImage(importTxtBlueEnable);
             btnBlueEnable.Apply();
+#endif
             //RCSla = ConfigNode.Load(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/RCSla.settings");
 
             //forceSASup = Convert.ToBoolean(RCSla.GetValue("ForceSAS"));    
             //FlightGlobals.ActiveVessel.OnFlyByWire += RCSLandAidControl;
+#if false
             if (ToolbarManager.ToolbarAvailable) //check if toolbar available, load if it is
             {
 
                 RCSla1Btn = ToolbarManager.Instance.add("RCSla", "RCSlaBtn");
-                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconWhiteB";
+                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24";
                 //RCSla1Btn.Text = "RCS";
                 RCSla1Btn.ToolTip = "RCS Land Aid";
 
@@ -83,35 +100,55 @@ namespace RCSLandAid
                         RightClick();
                     }
                 };
-                checkBlizzyToolbar = true;
+                //checkBlizzyToolbar = true;
             }
             else
             {
                 //AGXShow = true; //toolbar not installed, show AGX regardless
                 //now using stock toolbar as fallback
-                //LAButton = ApplicationLauncher.Instance.AddModApplication(onStockToolbarClick, onStockToolbarClick, DummyVoid, DummyVoid, DummyVoid, DummyVoid, ApplicationLauncher.AppScenes.FLIGHT, (Texture)GameDatabase.Instance.GetTexture("Diazo/RCSLandAid/iconWhiteB", false));
+                //LAButton = ApplicationLauncher.Instance.AddModApplication(onStockToolbarClick, onStockToolbarClick, DummyVoid, DummyVoid, DummyVoid, DummyVoid, ApplicationLauncher.AppScenes.FLIGHT, (Texture)GameDatabase.Instance.GetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", false));
                 StartCoroutine("AddButtons");
                 checkBlizzyToolbar = false;
             }
             //RCSLandingAidWindow RCSwin = new RCSLandingAidWindow();
-
+#endif
+            AddButtons();
 
         }
 
-        IEnumerator AddButtons()
+        internal const string MODID = "RCSLandAid_NS";
+        internal const string MODNAME = "Horizontal Landing Aid";
+
+        void  AddButtons()
         {
+#if false
             while (!ApplicationLauncher.Ready)
             {
                 yield return null;
             }
             if (!buttonCreated)
             {
-                LAButton = ApplicationLauncher.Instance.AddModApplication(onStockToolbarClick, onStockToolbarClick, DummyVoid, DummyVoid, DummyVoid, DummyVoid, ApplicationLauncher.AppScenes.FLIGHT, (Texture)GameDatabase.Instance.GetTexture("Diazo/RCSLandAid/iconWhiteB", false));
+                LAButton = ApplicationLauncher.Instance.AddModApplication(onStockToolbarClick, onStockToolbarClick, DummyVoid, DummyVoid, DummyVoid, DummyVoid, ApplicationLauncher.AppScenes.FLIGHT,
+            (Texture)GameDatabase.Instance.GetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", false));
                 //GameEvents.onGUIApplicationLauncherReady.Remove(AddButtons);
                 //CLButton.onLeftClick(StockToolbarClick);
                 LAButton.onLeftClick = (Callback)Delegate.Combine(LAButton.onLeftClick, LeftClick); //combine delegates together
                 LAButton.onRightClick = (Callback)Delegate.Combine(LAButton.onRightClick, RightClick); //combine delegates together
                 buttonCreated = true;
+            }
+#endif
+            if (!buttonCreated)
+            {
+                toolbarControl = gameObject.AddComponent<ToolbarControl>();
+                toolbarControl.AddToAllToolbars(onStockToolbarClick, onStockToolbarClick,
+                    ApplicationLauncher.AppScenes.FLIGHT,
+                    MODID,
+                    "rcsLandAidButton",
+                    "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24",
+                    "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24",
+                    MODNAME
+                );
+                toolbarControl.AddLeftRightClickCallbacks(LeftClick, RightClick);
             }
         }
 
@@ -119,7 +156,7 @@ namespace RCSLandAid
         {
             if (showLAMenu)
             {
-                LASettingsWin = GUI.Window(67347792, LASettingsWin, DrawWin, "Settings", HighLogic.Skin.window);
+                LASettingsWin = ClickThruBlocker.GUIWindow(67347792, LASettingsWin, DrawWin, "Settings", HighLogic.Skin.window);
                 if (Input.mousePosition.x > LASettingsWin.x && Input.mousePosition.x < LASettingsWin.x + LASettingsWin.width && (Screen.height - Input.mousePosition.y) > LASettingsWin.y && (Screen.height - Input.mousePosition.y) < LASettingsWin.y + LASettingsWin.height)
                 {
                     overWindow = true;
@@ -138,38 +175,49 @@ namespace RCSLandAid
         }
         public void onStockToolbarClick()
         {
-
+#if false
             //print("mouse " + Input.GetMouseButtonUp(1) + Input.GetMouseButtonDown(1));
             //superceeded by delegates in KSP 1.1
-            //if (Input.GetMouseButtonUp(1))
-            //{
-            //    RightClick();
-            //}
-            //else
-            //{
-            //    LeftClick();
-            //}
-
+            if (Input.GetMouseButtonUp(1))
+            {
+                RightClick();
+            }
+            else
+            {
+                LeftClick();
+            }
+#endif
         }
 
-        
-        
+        internal static void SetColors(LineRenderer l, Color start, Color end)
+        {
+            l.startColor = start;
+            l.endColor = end;
+        }
+        internal static void SetWidth(LineRenderer l, float start, float end)
+        {
+            l.startWidth = start;
+            l.endWidth = end;
+        }
+
         public void SetHoverOn()
         {
             curVsl.controlState = 1;
             curVsl.targetSelected = false;
             selectingTarget = false;
-            curVsl.theLine.SetWidth(0, 0);
+            SetWidth(curVsl.theLine, 0, 0);
+#if false
             if (checkBlizzyToolbar)
                     {
-                        RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconBlue";
+                        RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24";
                         RCSla1Btn.Drawable = null;
                     }
                     else
                     {
-                        LAButton.SetTexture(btnBlue);
+#endif
+                        toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
                         showLAMenu = false;
-                    }
+      //              }
             selectingTarget = false;
                     curVsl.targetSelected = false;
         }
@@ -179,53 +227,59 @@ namespace RCSLandAid
             curVsl.controlState = 0;
             curVsl.targetSelected = false;
             selectingTarget = false;
-            curVsl.theLine.SetWidth(0, 0);
+            SetWidth(curVsl.theLine, 0, 0);
+#if false
             if (checkBlizzyToolbar)
             {
-                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconWhiteB";
+                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24";
                 RCSla1Btn.Drawable = null;
             }
             else
             {
-                LAButton.SetTexture(btnGray);
+#endif
+                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
                 showLAMenu = false;
-            }
+//            }
         }
 
         public void SetHoldOn()
         {
             curVsl.controlState = 2;
             selectingTarget = true;
-            curVsl.theLine.SetColors(Color.red, Color.red);
+            SetColors(curVsl.theLine, Color.red, Color.red);
+#if false
             if (checkBlizzyToolbar)
             {
-                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRed";
+                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRed-24";
                 RCSLandingAidWindow RCSwin = new RCSLandingAidWindow();
                 RCSla1Btn.Drawable = RCSwin;
             }
             else
             {
-                LAButton.SetTexture(btnRed);
+#endif
+                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
                 showLAMenu = true;
-            }
+//            }
         }
 
         public void SetHoldOnLink()
         {
             curVsl.controlState = 2;
             selectingTarget = true;
-            curVsl.theLine.SetColors(Color.red, Color.red);
+            SetColors(curVsl.theLine, Color.red, Color.red);
+#if false
             if (checkBlizzyToolbar)
             {
-                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRed";
+                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRed-24";
                 //RCSLandingAidWindow RCSwin = new RCSLandingAidWindow();
                 //RCSla1Btn.Drawable = RCSwin;
             }
             else
             {
-                LAButton.SetTexture(btnRed);
+#endif
+                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
                 //showLAMenu = true;
-            }
+//            }
         }
 
         public void SetHoldOnHere()
@@ -244,7 +298,7 @@ namespace RCSLandAid
             {
                 hitLoc = pHit.point;
                 // print(hitLoc);
-                curVsl.theLine.SetWidth(0, 1);
+                SetWidth(curVsl.theLine, 0, 1);
                 curVsl.theLine.SetPosition(0, hitLoc);
                 curVsl.theLine.SetPosition(1, hitLoc + ((hitLoc - FlightGlobals.ActiveVessel.mainBody.position).normalized) * 7);
                 //if (!overWindow)
@@ -268,18 +322,20 @@ namespace RCSLandAid
 
 
             //curVsl.targetLocation = curVsl.vessel.transform.position;
-            curVsl.theLine.SetColors(Color.red, Color.red);
+            SetColors(curVsl.theLine, Color.red, Color.red);
+#if false
             if (checkBlizzyToolbar)
             {
-                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRed";
+                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRed-24";
                 //RCSLandingAidWindow RCSwin = new RCSLandingAidWindow();
                 //RCSla1Btn.Drawable = RCSwin;
             }
             else
             {
-                LAButton.SetTexture(btnRed);
+#endif
+                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
                 //showLAMenu = true;
-            }
+//            }
         }
 
         public Callback LeftClick = delegate
@@ -350,7 +406,7 @@ namespace RCSLandAid
                 {
                     errLine = "1a";
                     //Debug.Log("vsl null");
-                    curVsl.theLine.SetColors(Color.blue, Color.blue);
+                    SetColors(curVsl.theLine, Color.blue, Color.blue);
                     curVsl = null;
                     curBtnState = 0;
                 }
@@ -364,7 +420,7 @@ namespace RCSLandAid
                         if (curVsl != null)
                         {
                             //Debug.Log("blue reset");
-                            curVsl.theLine.SetColors(Color.blue, Color.blue);
+                            SetColors(curVsl.theLine, Color.blue, Color.blue);
                         }
                     }
                     catch
@@ -456,7 +512,7 @@ namespace RCSLandAid
                 curBtnState = 0;
                 if (curVsl != null)
                 {
-                    curVsl.theLine.SetColors(Color.blue, Color.blue);
+                    SetColors(curVsl.theLine, Color.blue, Color.blue);
                 }
                 curVsl = null;
             }
@@ -478,21 +534,23 @@ namespace RCSLandAid
                     {
                         hitLoc = pHit.point;
                         // print(hitLoc);
-                        curVsl.theLine.SetWidth(0, 1);
+                        SetWidth(curVsl.theLine, 0, 1);
                         curVsl.theLine.SetPosition(0, hitLoc);
                         curVsl.theLine.SetPosition(1, hitLoc + ((hitLoc - FlightGlobals.ActiveVessel.mainBody.position).normalized) * 7);
                         if (!overWindow)
                         {
                             if (Input.GetKeyDown(KeyCode.Mouse0))
                             {
+#if false
                                 if (checkBlizzyToolbar)
                                 {
                                     RCSla1Btn.Drawable = null;
                                 }
                                 else
                                 {
+#endif
                                     showLAMenu = false;
-                                }
+//                                }
                                 selectingTarget = false;
                                 curVsl.targetLocation = hitLoc;
                                 curVsl.targetSelected = true;
@@ -507,64 +565,74 @@ namespace RCSLandAid
                     switch (curBtnState)
                     {
                         case 0:
+#if false
                             if (checkBlizzyToolbar)
                             {
                                 //Debug.Log("LA1");
-                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconWhiteB";
+                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24";
                             }
                             else
                             {
+#endif
                                 //Debug.Log("LA2");
-                                LAButton.SetTexture(btnGray);
-                            }
+                                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
+//                            }
                             break;
                         case 1:
+#if false
                             if (checkBlizzyToolbar)
                             {
                                 //Debug.Log("LA3");
-                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconBlue";
+                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24";
                             }
                             else
                             {
+#endif
                                 //Debug.Log("LA4");
-                                LAButton.SetTexture(btnBlue);
-                            }
+                                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
+//                            }
                             break;
                         case 2:
-                            if (checkBlizzyToolbar)
+  #if false
+                          if (checkBlizzyToolbar)
                             {
                                // Debug.Log("LA5");
-                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconBlueEnabled";
+                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24";
                             }
                             else
                             {
-                               // Debug.Log("LA6");
-                                LAButton.SetTexture(btnBlueEnable);
-                            }
+#endif
+                                // Debug.Log("LA6");
+                                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24");
+//                            }
                             break;
                         case 3:
-                            if (checkBlizzyToolbar)
+  #if false
+                          if (checkBlizzyToolbar)
                             {
                                // Debug.Log("LA7");
-                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRed";
+                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRed-24";
                             }
                             else
                             {
-                               // Debug.Log("LA8");
-                                LAButton.SetTexture(btnRed);
-                            }
+#endif
+                                // Debug.Log("LA8");
+                                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
+//                            }
                             break;
                         case 4:
-                            if (checkBlizzyToolbar)
+  #if false
+                          if (checkBlizzyToolbar)
                             {
                                // Debug.Log("LA9");
-                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRedEnabled";
+                                RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24";
                             }
                             else
                             {
-                               // Debug.Log("LA10");
-                                LAButton.SetTexture(btnRedEnable);
-                            }
+#endif
+                                // Debug.Log("LA10");
+                                toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24", "Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24");
+//                            }
                             break;
                     }
                     lastBtnState = curBtnState;
@@ -580,7 +648,7 @@ namespace RCSLandAid
 
         public void OnDisable()
         {
-
+#if false
             if (ToolbarManager.ToolbarAvailable) //if toolbar loaded, destroy button on leaving flight scene
             {
                 RCSla1Btn.Destroy();
@@ -591,6 +659,10 @@ namespace RCSLandAid
             {
                 ApplicationLauncher.Instance.RemoveModApplication(LAButton);
             }
+#endif
+            toolbarControl.OnDestroy();
+            Destroy(toolbarControl);
+
             //RCSla.SetValue("EngageHeight", curVsl.engageHeight.ToString());
             //RCSla.SetValue("ForceSAS", forceSASup.ToString());
             // RCSla.Save(KSPUtil.ApplicationRootPath + "GameData/Diazo/RCSLandAid/RCSla.settings");
@@ -602,23 +674,23 @@ namespace RCSLandAid
         //    {
         //        if (curVsl.controlState == 0)
         //        {
-        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconWhiteB";
+        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24";
         //        }
         //        else if (curVsl.controlState == 1 && curVsl.inControl)
         //        {
-        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconBlueEnabled";
+        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24";
         //        }
         //        else if (curVsl.controlState == 1 && !curVsl.inControl)
         //        {
-        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconBlue";
+        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24";
         //        }
         //        else if (curVsl.controlState == 2 && curVsl.inControl)
         //        {
-        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRedEnabled";
+        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24";
         //        }
         //        else if (curVsl.controlState == 2 && !curVsl.inControl)
         //        {
-        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/iconRed";
+        //            RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconRed-24";
         //        }
 
         //    }
@@ -731,7 +803,7 @@ namespace RCSLandAid
             RCSlaWin.x = position.x;
             RCSlaWin.y = position.y;
 
-            GUI.Window(22334567, RCSlaWin, DrawWin, "", GUI.skin.window);
+            ClickThruBlocker.GUIWindow(22334567, RCSlaWin, DrawWin, "", GUI.skin.window);
             //RCSlaWin = GUILayout.Window(42334567, RCSlaWin, DrawWin, (string)null, GUI.skin.box);
             GUI.skin = oldSkin;
             if (Input.mousePosition.x > RCSlaWin.x && Input.mousePosition.x < RCSlaWin.x + RCSlaWin.width && (Screen.height - Input.mousePosition.y) > RCSlaWin.y && (Screen.height - Input.mousePosition.y) < RCSlaWin.y + RCSlaWin.height)

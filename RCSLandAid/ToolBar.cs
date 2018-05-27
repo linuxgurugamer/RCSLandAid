@@ -1,4 +1,4 @@
-﻿
+﻿#if false
         /*
 Copyright (c) 2013-2014, Maik Schreiber
 All rights reserved.
@@ -797,3 +797,4 @@ destroyMethod = ToolbarTypes.getMethod(iButtonType, "Destroy");
 }
     
 
+#endif

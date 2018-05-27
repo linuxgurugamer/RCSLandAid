@@ -1,0 +1,5 @@
+3.3.0
+	Added .version file
+	Added support for ToolbarController
+	Added support for ClickThroughBlocker
+	Removed Blizzy options
