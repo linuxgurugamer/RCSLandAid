@@ -39,10 +39,6 @@
     <Compile Include="RCSLandAid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RCSLandAidModule.cs" />
-    <Compile Include="ToolBar.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using System.IO;
 
 
 namespace RCSLandAid
 {
-    
+
     public class RCSLandingAidModule : PartModule
     {
         Vector3 surVect; //our surface vector, includes vertical movement
@@ -21,51 +19,40 @@ namespace RCSLandAid
         public bool targetSelected = false;
         [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false)]
         public Vector3 targetLocation;
-        [KSPField(isPersistant=false,guiActive=false,guiActiveEditor=false)]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false)]
         public int controlState = 0; //0 = off, 1 = zero vel, 2= hover over point;
-         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
-       public bool isMasterModule = false;
-     
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
+        public bool isMasterModule = false;
+
         public bool SASset = false;
         public float vslHeight = 0f;
-        
+
         Quaternion vslRefQuant;
         Vector3 vslUpRef;
         public float thisBodyAccel = 1f;
         private int frameCount = 0;
         public LineRenderer theLine = new LineRenderer();
-         GameObject lineObj = new GameObject("Line");
+        GameObject lineObj = new GameObject("Line");
 
-         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
-         public int maxTip = 20;
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
+        public int maxTip = 20;
 
-         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
-         public float aggresiveness = 1f;
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
+        public float aggresiveness = 1f;
 
-         int ourBtnState = 0;
-         //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
-         //public bool masterModule;
+        int ourBtnState = 0;
+        //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
+        //public bool masterModule;
 
-         //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
-         //public bool useRCS = false;
+        //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)] 
+        //public bool useRCS = false;
 
 
-         float rcsLimiter; //KSP doesn't throttle RCS on it's own, do it manually when close to target
+        float rcsLimiter; //KSP doesn't throttle RCS on it's own, do it manually when close to target
         float rcsXpower = 0f;
-         float rcsYpower = 0f;
-         float rcsZpower = 0f;
-#if false
-        internal static void SetColors(LineRenderer l, Color start, Color end)
-        {
-            l.startColor = start;
-            l.endColor = end;
-        }
-        internal static void SetWidth(LineRenderer l, float start, float end)
-        {
-            l.startWidth = start;
-            l.endWidth = end;
-        }
-#endif
+        float rcsYpower = 0f;
+        float rcsZpower = 0f;
+
         internal static void SetVertexCount(LineRenderer l, int cnt)
         {
             l.positionCount = cnt;
@@ -81,7 +68,7 @@ namespace RCSLandAid
                 RCSLandingAid.SetColors(theLine, Color.blue, Color.blue);
                 RCSLandingAid.SetWidth(theLine, 0, 0);
                 SetVertexCount(theLine, 2);
-  
+
                 theLine.useWorldSpace = true;
                 this.vessel.OnPostAutopilotUpdate += ControlsOverride;
             }
@@ -93,7 +80,7 @@ namespace RCSLandAid
         {
             float rcs = Mathf.Abs(RCS);
             rcs = Mathf.Min(rcs, Limit);
-            if(RCS < 0) //was RCS negative?
+            if (RCS < 0) //was RCS negative?
             {
                 rcs = rcs * -1f;
             }
@@ -110,27 +97,27 @@ namespace RCSLandAid
 
                 //if (useRCS)
                 //{
-                    fs.X = rcsXpower;
-                    fs.Y = rcsYpower;
-                    fs.Z = rcsZpower;
+                fs.X = rcsXpower;
+                fs.Y = rcsYpower;
+                fs.Z = rcsZpower;
                 //}
             }
         }
-        
 
-       
+
+
 
         public void Update()
         {
-           
+
 
         }
 
         public void OnDisable()
         {
 
-           
-        
+
+
         }
         public void FixedUpdate()
         {
@@ -189,7 +176,7 @@ namespace RCSLandAid
                         }
                         //if (useTip)
                         //{
-                            TipOverControl(moveHorizLocal, new Vector3(0, 0, 0));
+                        TipOverControl(moveHorizLocal, new Vector3(0, 0, 0));
                         //}
                         RCSControl(moveHorizLocal);
                     }
@@ -208,7 +195,7 @@ namespace RCSLandAid
                         Vector3 targetVect = Vector3.ProjectOnPlane(worldUp, targetLocation - vslRef.position); //vector from vessel to target, limit to horizontal plane
                         Vector3 targetVectLocal = (vslRef.InverseTransformDirection(targetVect)); //our vector, as distance to target, in local coords uses
 
-                        float targetVel = (Mathf.Sqrt(2f * Mathf.Abs(targetVectLocal.magnitude) * (thisBodyAccel * 3)))*aggresiveness; //calc max speed we could be going for this distance to target. desired vel = sqaure root of (2*distToTarget*desiredAccel)
+                        float targetVel = (Mathf.Sqrt(2f * Mathf.Abs(targetVectLocal.magnitude) * (thisBodyAccel * 3))) * aggresiveness; //calc max speed we could be going for this distance to target. desired vel = sqaure root of (2*distToTarget*desiredAccel)
                         //("targvel " + targetVel);
                         Vector3 targetVectLocalModifiedSpeed = targetVectLocal.normalized * targetVel; //this is our desired vector for this distance from target
                         Vector3 moveSpeedTorwardTarget = Vector3.Project(moveHorizLocal, targetVectLocal); //component of our motion to/from target
@@ -216,11 +203,11 @@ namespace RCSLandAid
 
 
                         Vector3 currentVectorDiff = moveSpeedTorwardTarget - targetVectLocalModifiedSpeed; //find our difference to pass to tip over control
-                        //if (useTip)
-                        //{
-                            TipOverControl(currentVectorDiff, moveSpeedSidewaysFromTarget); //pass sideways speed raw, we want to cancel it asap. setting up direction is not in this method, safe to just skip it
+                                                                                                           //if (useTip)
+                                                                                                           //{
+                        TipOverControl(currentVectorDiff, moveSpeedSidewaysFromTarget); //pass sideways speed raw, we want to cancel it asap. setting up direction is not in this method, safe to just skip it
                         //}
-                        RCSControl(-(targetVectLocalModifiedSpeed-moveHorizLocal)); //rcs is direct, so just pass it our vector, always run this method as it calculates rcsLimitier, check to use in the FlightControlState method
+                        RCSControl(-(targetVectLocalModifiedSpeed - moveHorizLocal)); //rcs is direct, so just pass it our vector, always run this method as it calculates rcsLimitier, check to use in the FlightControlState method
 
                     }
                     else
@@ -228,7 +215,7 @@ namespace RCSLandAid
                         ourBtnState = 0;
                     }
 
-                    if(this.vessel == FlightGlobals.ActiveVessel) //only change GUI button if we are focus vessel
+                    if (this.vessel == FlightGlobals.ActiveVessel) //only change GUI button if we are focus vessel
                     {
                         //Debug.Log("LA Module " + ourBtnState);
                         RCSLandingAid.curBtnState = ourBtnState;
@@ -239,7 +226,7 @@ namespace RCSLandAid
 
         public void RCSControl(Vector3 tarVect)
         {
-           // print("tad direct " + Planetarium.GetUniversalTime()+ tarVectDirect);
+            // print("tad direct " + Planetarium.GetUniversalTime()+ tarVectDirect);
             //Vector3 tarVect = Vector3.Exclude(worldUp, tarVectDirect);
             //print("tar " + tarVect);
             rcsLimiter = Mathf.Min(1, targetLocation.magnitude);
@@ -253,8 +240,8 @@ namespace RCSLandAid
         {
             //targetVect is our current "movement" relative to our target. In move to point mode, target is moving also as it is the desired velocity for our distance to target
             //worldUp is straight up
-            float degTipDesiredForwards = Mathf.Min(maxTip, (targetVect.magnitude / (thisBodyAccel * 4)*aggresiveness)) * -1f; //degrees to tip, make negative to tip away
-            float degTipDesiredSideways = Mathf.Min(maxTip, (sideWaysVect.magnitude / (thisBodyAccel * 4)*aggresiveness));// * -1f; //degrees to tip, make negative to tip away
+            float degTipDesiredForwards = Mathf.Min(maxTip, (targetVect.magnitude / (thisBodyAccel * 4) * aggresiveness)) * -1f; //degrees to tip, make negative to tip away
+            float degTipDesiredSideways = Mathf.Min(maxTip, (sideWaysVect.magnitude / (thisBodyAccel * 4) * aggresiveness));// * -1f; //degrees to tip, make negative to tip away
             Vector3 sasDirectionSidewaysOnly = Vector3.RotateTowards(worldUp, vslRef.TransformDirection(sideWaysVect), (Mathf.Deg2Rad * degTipDesiredSideways), 0f);
             Vector3 sasDirection = Vector3.RotateTowards(sasDirectionSidewaysOnly, vslRef.TransformDirection(targetVect), (Mathf.Deg2Rad * degTipDesiredForwards), 0f);
             if (frameCount == 0)
@@ -270,7 +257,7 @@ namespace RCSLandAid
             }
         }
 
-        
+
 
         public enum vslDirection { UP, DOWN, LEFT, RIGHT, FORWARD, BACK }
 
@@ -336,8 +323,8 @@ namespace RCSLandAid
             return vslRefQuant;
         }
 
-       
+
     }
 
-    
+
 }

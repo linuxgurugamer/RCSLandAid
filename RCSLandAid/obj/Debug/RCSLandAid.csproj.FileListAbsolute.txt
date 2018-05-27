@@ -16,4 +16,3 @@ D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Debug\RCSLandAid.csproj.CopyComple
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Debug\RCSLandAid.dll
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Debug\RCSLandAid.pdb
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Debug\ToolbarControl.dll
-D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Debug\RCSLandAid.csprojResolveAssemblyReference.cache
