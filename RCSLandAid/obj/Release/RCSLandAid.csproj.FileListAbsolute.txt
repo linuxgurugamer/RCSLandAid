@@ -23,3 +23,24 @@ H:\1.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.dll
 H:\1.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.pdb
 H:\1.2.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.dll
 H:\1.2.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.pdb
+D:\Users\1.2.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.dll
+D:\Users\1.2.2 Dev\GameData\Diazo\RCSLandAid\RCSLandAid.pdb
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.csproj.CoreCompileInputs.cache
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.csproj.CopyComplete
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.pdb
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\RCSLandAid.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\RCSLandAid.pdb
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Assembly-CSharp.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\ClickThroughBlocker.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\ToolbarControl.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\UnityEngine.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\UnityEngine.UI.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Assembly-CSharp-firstpass.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\KSPTrackIR.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\KSPAssets.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Mono.Cecil.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Ionic.Zip.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\TDx.TDxInput.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\RedShellSDK.dll
+D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.csprojResolveAssemblyReference.cache

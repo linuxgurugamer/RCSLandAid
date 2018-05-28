@@ -77,7 +77,7 @@ namespace RCSLandAid
                     ApplicationLauncher.AppScenes.FLIGHT,
                     MODID,
                     "rcsLandAidButton",
-                    "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24",
+                    "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-38",
                     "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24",
                     MODNAME
                 );
@@ -140,16 +140,8 @@ namespace RCSLandAid
             curVsl.targetSelected = false;
             selectingTarget = false;
             SetWidth(curVsl.theLine, 0, 0);
-#if false
-            if (checkBlizzyToolbar)
-                    {
-                        RCSla1Btn.TexturePath = "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24";
-                        RCSla1Btn.Drawable = null;
-                    }
-                    else
-                    {
-#endif
-            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
+
+            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-38", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
             showLAMenu = false;
             //              }
             selectingTarget = false;
@@ -163,7 +155,7 @@ namespace RCSLandAid
             selectingTarget = false;
             SetWidth(curVsl.theLine, 0, 0);
 
-            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
+            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-38", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
             showLAMenu = false;
             //            }
         }
@@ -174,7 +166,7 @@ namespace RCSLandAid
             selectingTarget = true;
             SetColors(curVsl.theLine, Color.red, Color.red);
 
-            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
+            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-38", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
             showLAMenu = true;
 
         }
@@ -185,7 +177,7 @@ namespace RCSLandAid
             selectingTarget = true;
             SetColors(curVsl.theLine, Color.red, Color.red);
 
-            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
+            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-38", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
             //showLAMenu = true;
 
         }
@@ -232,7 +224,7 @@ namespace RCSLandAid
             //curVsl.targetLocation = curVsl.vessel.transform.position;
             SetColors(curVsl.theLine, Color.red, Color.red);
 
-            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
+            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-38", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
             //showLAMenu = true;
 
         }
@@ -459,31 +451,31 @@ namespace RCSLandAid
                         case 0:
 
                             //Debug.Log("LA2");
-                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
+                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-38", "Diazo/RCSLandAid/PluginData/Textures/iconWhiteB-24");
 
                             break;
                         case 1:
 
                             //Debug.Log("LA4");
-                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
+                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlue-38", "Diazo/RCSLandAid/PluginData/Textures/iconBlue-24");
 
                             break;
                         case 2:
 
                             // Debug.Log("LA6");
-                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24", "Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24");
+                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-38", "Diazo/RCSLandAid/PluginData/Textures/iconBlueEnabled-24");
 
                             break;
                         case 3:
 
                             // Debug.Log("LA8");
-                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-24", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
+                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRed-38", "Diazo/RCSLandAid/PluginData/Textures/iconRed-24");
 
                             break;
                         case 4:
 
                             // Debug.Log("LA10");
-                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24", "Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24");
+                            toolbarControl.SetTexture("Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-38", "Diazo/RCSLandAid/PluginData/Textures/iconRedEnabled-24");
 
                             break;
                     }

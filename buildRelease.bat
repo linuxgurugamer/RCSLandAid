@@ -23,8 +23,8 @@ rem    but not always
 rem LICENSE is the license file
 rem README is the readme file
 
-set GAMEDIR=xxxxx
-set GAMEDATA="GameData\"
+set GAMEDIR=RCSLandAid
+set GAMEDATA="GameData\Diazo"
 set VERSIONFILE=%GAMEDIR%.version
 set LICENSE=License.txt
 set README=ReadMe.md
@@ -44,6 +44,7 @@ if "%README%" NEQ "" copy /Y %README% %GAMEDATA%\%GAMEDIR%
 rem Get Version info
 
 copy %VERSIONFILE% tmp.version
+
 set VERSIONFILE=tmp.version
 rem The following requires the JQ program, available here: https://stedolan.github.io/jq/download/
 c:\local\jq-win64  ".VERSION.MAJOR" %VERSIONFILE% >tmpfile
@@ -64,9 +65,8 @@ if "%build%" NEQ "0"  set VERSION=%VERSION%.%build%
 
 echo Version:  %VERSION%
 
-
 rem Build the zip FILE
-cd %GAMEDATA%\..
+cd %GAMEDATA%\..\..
 
 set FILE="%RELEASEDIR%\%GAMEDIR%-%VERSION%.zip"
 IF EXIST %FILE% del /F %FILE%
