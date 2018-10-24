@@ -42,5 +42,4 @@ D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\KSPAssets.dll
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Mono.Cecil.dll
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\Ionic.Zip.dll
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\TDx.TDxInput.dll
-D:\Users\jbb\github\RCSLandAid\RCSLandAid\bin\Release\RedShellSDK.dll
 D:\Users\jbb\github\RCSLandAid\RCSLandAid\obj\Release\RCSLandAid.csprojResolveAssemblyReference.cache

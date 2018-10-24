@@ -4,3 +4,6 @@
 	Added support for ClickThroughBlocker
 	Removed Blizzy options
 	Updated icons with 38x38  versions
+
+3.3.0.1
+	Version bump for 1.5 rebuild
