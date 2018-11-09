@@ -7,3 +7,7 @@
 
 3.3.0.1
 	Version bump for 1.5 rebuild
+
+3.3.1
+	Fixed right-click not allowing setting target on ground
+	Fixed reversed parameters for Vector3.ProjectOnPlane(b,a), which replaced Vector3.Exclude(a,b)

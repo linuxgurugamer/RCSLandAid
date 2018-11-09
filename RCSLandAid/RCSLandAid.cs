@@ -229,8 +229,10 @@ namespace RCSLandAid
 
         }
 
-        public Callback LeftClick = delegate
+        public void LeftClick()
         {
+
+            Debug.Log("RCS LeftClick");
             if (curVsl != null)
             {
                 //Debug.Log("RCS lcs " + curVsl.controlState);
@@ -243,14 +245,14 @@ namespace RCSLandAid
                     thisModule.SetHoverOff();
                 }
             }
-
-        };
-
+        }
 
 
-        public Callback RightClick = delegate
+
+        public void RightClick()
         {
-            //Debug.Log("RCS Rightclick");
+
+            Debug.Log("RCS Rightclick");
             //RCSLandingAid thisClass = FindObjectOfType<RCSLandingAid>();
             if (curVsl != null)
             {
@@ -266,7 +268,7 @@ namespace RCSLandAid
 
                 }
             }
-        };
+        }
 
         public bool DataModulePresent(Vessel vsl)
         {

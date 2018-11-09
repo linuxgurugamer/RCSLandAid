@@ -89,23 +89,27 @@ namespace RCSLandAid
 
         public void ControlsOverride(FlightCtrlState fs)
         {
+            Debug.Log("ControlsOverride, fs.X, Y, Z: " + fs.X + ", " + fs.Y + ", " + fs.Z);
             if (controlState != 0 && engageHeight > vslHeight && this.vessel.ActionGroups[KSPActionGroup.SAS]) //only do stuff if we are engaged
             {
                 fs.X = RCSlimitCalc(fs.X, rcsLimiter);
                 fs.Y = RCSlimitCalc(fs.Y, rcsLimiter);
                 fs.Z = RCSlimitCalc(fs.Z, rcsLimiter);
-
+                Debug.Log("fs.X, Y, Z: " + fs.X + ", " + fs.Y + ", " + fs.Z);
+                Debug.Log("rcsLimiter: " + rcsLimiter + ",  rcsXpower, Y, Z: " + rcsXpower + ", " + rcsYpower + ", " + rcsZpower);
+#if true
                 //if (useRCS)
                 //{
                 fs.X = rcsXpower;
                 fs.Y = rcsYpower;
                 fs.Z = rcsZpower;
                 //}
+#endif
             }
         }
 
 
-
+#if false
 
         public void Update()
         {
@@ -119,6 +123,8 @@ namespace RCSLandAid
 
 
         }
+#endif
+
         public void FixedUpdate()
         {
             if (HighLogic.LoadedSceneIsFlight)
@@ -127,7 +133,7 @@ namespace RCSLandAid
                 vslRef = this.vessel.ReferenceTransform;
                 worldUp = vslRef.position - this.vessel.mainBody.position;
 
-                moveHoriz = Vector3.ProjectOnPlane(worldUp, surVect);
+                moveHoriz = Vector3.ProjectOnPlane(surVect, worldUp);
                 moveHorizLocal = vslRef.InverseTransformDirection(moveHoriz);
 
                 if (isMasterModule)
@@ -192,7 +198,7 @@ namespace RCSLandAid
                             ourBtnState = 3;
                         }
 
-                        Vector3 targetVect = Vector3.ProjectOnPlane(worldUp, targetLocation - vslRef.position); //vector from vessel to target, limit to horizontal plane
+                        Vector3 targetVect = Vector3.ProjectOnPlane( targetLocation - vslRef.position, worldUp); //vector from vessel to target, limit to horizontal plane
                         Vector3 targetVectLocal = (vslRef.InverseTransformDirection(targetVect)); //our vector, as distance to target, in local coords uses
 
                         float targetVel = (Mathf.Sqrt(2f * Mathf.Abs(targetVectLocal.magnitude) * (thisBodyAccel * 3))) * aggresiveness; //calc max speed we could be going for this distance to target. desired vel = sqaure root of (2*distToTarget*desiredAccel)

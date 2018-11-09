@@ -30,7 +30,7 @@ Right﻿-Click to go to Zero mode (Blue)
 
 Yellow Border: When the mod is actively controlling the vessel, the icon will have a yellow border around it.
 
-Engage Height: Regardless of which mode the mod is in, it will not activate unless you vessel is within 1000 meters of the ground. As the mod zero's out your velocity relative to a point on the surface, zeroing out too high wastes fuel as your vessels' sideways velocity is higher the then sideways velocity of the ground under it. This limit is adjustable by right-clicking the LA button and entering the height you wish to engage at.
+Engage Height: Regardless of which mode the mod is in, it will not activate unless you vessel is within 500 meters of the ground. As the mod zero's out your velocity relative to a point on the surface, zeroing out too high wastes fuel as your vessels' sideways velocity is higher the then sideways velocity of the ground under it. This limit is adjustable by right-clicking the LA button and entering the height you wish to engage at.
 
 SAS: SAS must be enabled to use the mod. In fact, the mod works by controlling the SAS direction. This means that while this mod is enabled, the vessel﻿ control keys (WASDQE) are not effective as the mod will override their inputs as soon as you release them.
 
