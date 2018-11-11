@@ -89,22 +89,18 @@ namespace RCSLandAid
 
         public void ControlsOverride(FlightCtrlState fs)
         {
-            Debug.Log("ControlsOverride, fs.X, Y, Z: " + fs.X + ", " + fs.Y + ", " + fs.Z);
             if (controlState != 0 && engageHeight > vslHeight && this.vessel.ActionGroups[KSPActionGroup.SAS]) //only do stuff if we are engaged
             {
                 fs.X = RCSlimitCalc(fs.X, rcsLimiter);
                 fs.Y = RCSlimitCalc(fs.Y, rcsLimiter);
                 fs.Z = RCSlimitCalc(fs.Z, rcsLimiter);
-                Debug.Log("fs.X, Y, Z: " + fs.X + ", " + fs.Y + ", " + fs.Z);
-                Debug.Log("rcsLimiter: " + rcsLimiter + ",  rcsXpower, Y, Z: " + rcsXpower + ", " + rcsYpower + ", " + rcsZpower);
-#if true
+
                 //if (useRCS)
                 //{
                 fs.X = rcsXpower;
                 fs.Y = rcsYpower;
                 fs.Z = rcsZpower;
                 //}
-#endif
             }
         }
 

@@ -231,8 +231,6 @@ namespace RCSLandAid
 
         public void LeftClick()
         {
-
-            Debug.Log("RCS LeftClick");
             if (curVsl != null)
             {
                 //Debug.Log("RCS lcs " + curVsl.controlState);
@@ -251,8 +249,6 @@ namespace RCSLandAid
 
         public void RightClick()
         {
-
-            Debug.Log("RCS Rightclick");
             //RCSLandingAid thisClass = FindObjectOfType<RCSLandingAid>();
             if (curVsl != null)
             {
