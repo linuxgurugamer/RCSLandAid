@@ -105,22 +105,6 @@ namespace RCSLandAid
         }
 
 
-#if false
-
-        public void Update()
-        {
-
-
-        }
-
-        public void OnDisable()
-        {
-
-
-
-        }
-#endif
-
         public void FixedUpdate()
         {
             if (HighLogic.LoadedSceneIsFlight)
