@@ -63,7 +63,7 @@ namespace RCSLandAid
             if (HighLogic.LoadedSceneIsFlight)
             {
                 theLine = lineObj.AddComponent<LineRenderer>();
-                theLine.material = new Material(Shader.Find("Particles/Additive"));
+                theLine.material = new Material(Shader.Find("Legacy Shaders/Particles/Additive"));
                 //theLine.SetColors(Color.red, Color.red);
                 RCSLandingAid.SetColors(theLine, Color.blue, Color.blue);
                 RCSLandingAid.SetWidth(theLine, 0, 0);
