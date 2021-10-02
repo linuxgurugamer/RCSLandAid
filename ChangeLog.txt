@@ -26,3 +26,7 @@ ChangeLog
 
 3.4.0.1
 	Fixed shader issue which was showing a ping square upon launching
+
+3.4.0.2
+	Added AssemblyFileVersion
+	Updated version file for 1.12
