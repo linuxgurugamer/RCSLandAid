@@ -1,6 +1,6 @@
 {
   "NAME": "RCSLandAid",
-  "URL": "http://ksp.spacetux.net/avc/RCSLandAid",
+  "URL": "https://raw.githubusercontent.com/linuxgurugamer/RCSLandAid/refs/heads/master/RCSLandAid.version",
   "DOWNLOAD": "https://github.com/linuxgurugamer/RCSLandAid/releases",
   "GITHUB": {
     "USERNAME": "linuxgurugamer",
@@ -10,7 +10,7 @@
     "MAJOR": 3,
     "MINOR": 4,
     "PATCH": 0,
-    "BUILD": 2
+    "BUILD": 3
   },
   "KSP_VERSION": {
     "MAJOR": 1,
